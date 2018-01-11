@@ -8,11 +8,6 @@
 #include <iomanip>
 #include <string>
 
-// Extra Libraries
-#include <winsock2.h>
-#include <windows.h>
-
-
 using namespace std; 
 
 class Password {
