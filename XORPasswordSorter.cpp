@@ -9,6 +9,11 @@
 #include <string>
 
 using namespace std; 
+// Current Key is ABC
+// Second Test is CAT
+const char key1 = 'A';
+const char key2 = 'B';
+const char key3 = 'C';
 
 class Password {
 private:
@@ -44,10 +49,10 @@ public:
 
 int checkSize (ifstream & fin);
 void readFile (ifstream & fin, int size, Password passwordList []);
-void output (ostream & out,Password passwordList [], int size, string searchType, bool coutFout); 
+void output (ostream & out,Password passwordList [], int size, string searchType, bool coutFout, const char key1, const char key2, const char key3); 
 void clearEntry (int choice, Password passwordList[]); 
 void waitForChoice (int & choice);
-void outputNewPassword (ostream & out, string newType, string newUsername, string newPassword);
+void outputNewPassword (ostream & out, string newType, string newUsername, string newPassword, const char key1, const char key2, const char key3);
 
 int main()
 {
@@ -77,7 +82,7 @@ int main()
 	cout << " (Just try not to type in Capital letter in general. SPACES NOT ALLOWED" << endl; 
 	cin >> searchType; 
 	cout << endl; 
-	output (cout,passwordList,size,searchType,false);
+	output (cout,passwordList,size,searchType,false,key1,key2,key3);
 	cout << endl;
 	
 	
@@ -108,10 +113,10 @@ int main()
 	}
 	cout << "Outputting list to a new file." << endl; 
 	ofstream fout("Passwords.txt");
-	output (fout,passwordList,size,"ALL",true);
+	output (fout,passwordList,size,"ALL",true,key1,key2,key3);
 	if (choice == 1)
 	{
-		outputNewPassword (fout,newType,newUsername,newPassword);
+		outputNewPassword (fout,newType,newUsername,newPassword,key1,key2,key3);
 	}
 	fin.close();
 	fout.close();
@@ -165,7 +170,7 @@ string encryptDecrypt (string & toProcess, char key)
 	return output; 
 }
 
-void output (ostream & out,Password passwordList [], int size, string searchType, bool coutFout)
+void output (ostream & out,Password passwordList [], int size, string searchType, bool coutFout, const char key1, const char key2, const char key3)
 {
 	string typeOut = "", usernameOut = "", passwordOut = ""; 
 		for (int index = 0; index < size; index ++)
@@ -175,9 +180,9 @@ void output (ostream & out,Password passwordList [], int size, string searchType
 		passwordOut = passwordList[index].getPassword();
 		if (coutFout == false) 
 		{	
-			typeOut = encryptDecrypt(typeOut,'A');
-			usernameOut = encryptDecrypt(usernameOut,'B'); 
-			passwordOut = encryptDecrypt(passwordOut,'C');
+			typeOut = encryptDecrypt(typeOut,key1);
+			usernameOut = encryptDecrypt(usernameOut,key2); 
+			passwordOut = encryptDecrypt(passwordOut,key3);
 		}
 		if (searchType == typeOut || searchType == "ALL" && typeOut != "EMPTY_TYPE")
 		{
@@ -192,12 +197,12 @@ void output (ostream & out,Password passwordList [], int size, string searchType
 	}
 }
 
-void outputNewPassword (ostream & out, string newType, string newUsername, string newPassword)
+void outputNewPassword (ostream & out, string newType, string newUsername, string newPassword, const char key1, const char key2, const char key3)
 {
 	string typeOut = "", usernameOut = "", passwordOut = ""; 
-	typeOut = encryptDecrypt(newType,'A');
-	usernameOut = encryptDecrypt(newUsername,'B');
-	passwordOut = encryptDecrypt(newPassword,'C');
+	typeOut = encryptDecrypt(newType,key1);
+	usernameOut = encryptDecrypt(newUsername,key2);
+	passwordOut = encryptDecrypt(newPassword,key3);
 	out << typeOut << endl;
 	out << usernameOut << endl; 
 	out << passwordOut << endl;
